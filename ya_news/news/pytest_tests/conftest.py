@@ -1,7 +1,9 @@
+import random
 from datetime import datetime, timedelta
 
 import pytest
 from django.conf import settings
+from django.urls import reverse
 from django.utils import timezone
 from news.models import Comment, News
 
@@ -53,17 +55,50 @@ def comment(news, author):
 
 
 @pytest.fixture
-def id_for_args(comment):
-    return comment.id,
-
-
-@pytest.fixture
-def news_with_two_comments(news, author):
-    now = timezone.now()
-    for index in range(2):
+def news_with_ten_comments(news, author):
+    start_date = timezone.now()
+    end_date = start_date + timedelta(days=10)
+    for index in range(10):
         comment = Comment.objects.create(
             news=news, author=author, text=f'Tекст {index}',
         )
-        comment.created = now + timedelta(days=index)
+        comment.created = (
+            start_date + (end_date - start_date) * random.random()
+        )
         comment.save()
     return news
+
+
+@pytest.fixture
+def url_news_detail(news):
+    return reverse('news:detail', args=(news.id,))
+
+
+@pytest.fixture
+def url_comment_delete(comment):
+    return reverse('news:delete', args=(comment.id,))
+
+
+@pytest.fixture
+def url_comment_edit(comment):
+    return reverse('news:edit', args=(comment.id,))
+
+
+@pytest.fixture
+def url_news_home():
+    return reverse('news:home')
+
+
+@pytest.fixture
+def url_user_login():
+    return reverse('users:login')
+
+
+@pytest.fixture
+def url_user_logout():
+    return reverse('users:logout')
+
+
+@pytest.fixture
+def url_user_signup():
+    return reverse('users:signup')
