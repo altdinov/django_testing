@@ -34,7 +34,7 @@ python3 -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-Структура репозитория:
+# Структура репозитория:
 ```
 Dev
  └── django_testing
