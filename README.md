@@ -2,7 +2,7 @@
 Тестирование проектов YaNote и YaNews на unittest и pytest соответственно.
 
 # Стек:
-Python, Pytest, Unittest
+python, pytest, unittest
 
 # Как развернуть проект
 Клонировать репозиторий и перейти в него в командной строке:
